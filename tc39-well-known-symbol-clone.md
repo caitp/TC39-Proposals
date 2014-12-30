@@ -111,3 +111,8 @@ The `length` of `Reflect.clone` is 1.
     1. If `deep` is `true`, then let `nextValue` be `Reflect.clone(nextValue, true)`.
   9. Let `putStatus` be `Put(result, nextKey, nextValue, true)`.
   10. `ReturnIfAbrupt(putStatus)`.
+
+## Similar Proposals:
+
+1. [Structured cloning and transfer](https://github.com/dslomov-chromium/ecmascript-structured-clone)
+  Advantages: Deals with cloning between realms --- Disadvantages: limited to host objects and builtins
