@@ -3,8 +3,7 @@
 
 ##Rationale
 
-It is useful to construct copies of objects, for use in dirty checking (tracking a new state vs old state of an object), or for
-creating an immutable clone.
+It is useful to construct copies of objects, for use in dirty checking (tracking a new state vs old state of an object), or for creating an immutable/hidden clone. An abstract convention for cloning objects is useful as it allows simplifying the code needed for generalized cloning operations.
 
 In ES5, naive strategies for doing this are used:
 
