@@ -12,11 +12,12 @@ Reflect.isCallable / Reflect.isConstructable
 ###Reflect.isCallable(argument)
 
 When the isCallable function is called with argument, the following steps are taken:
+
 1. ReturnIfAbrupt(argument).
 2. If Type(argument) is not Object, return false.
 3. If argument does not have a [[Call]] internal method return false.
 4. If argument has a [[FunctionKind]] internal slot with value `classConstructor`, return false.
-4. Return true.
+5. Return true.
 
 (Should be Return "[IsCallable](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-iscallable)(argument)", but adjusted to not report Class constructors as callable)
 
