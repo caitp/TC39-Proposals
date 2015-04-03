@@ -19,7 +19,7 @@ When the isCallable function is called with argument, the following steps are ta
 4. If argument has a [[FunctionKind]] internal slot with value `classConstructor`, return false.
 5. Return true.
 
-(Should be Return "[IsCallable](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-iscallable)(argument)", but adjusted to not report Class constructors as callable)
+(Should be Return "[IsCallable](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-iscallable)(argument)", but adjusted to not report Class constructors as callable, as they throw unconditionally without invoking any author'd code, in the current draft)
 
 ###Reflect.isConstructor(argument)
 
