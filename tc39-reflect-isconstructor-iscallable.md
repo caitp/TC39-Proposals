@@ -15,7 +15,7 @@ When the isCallable function is called with argument, the following steps are ta
 
 1. ReturnIfAbrupt(argument).
 2. If Type(argument) is not Object, return false.
-3. If argument does not have a [[Call]] internal method return false.
+3. If argument does not have a [[Call]] internal method, return false.
 4. If argument has a [[FunctionKind]] internal slot with value `classConstructor`, return false.
 5. Return true.
 
