@@ -1,7 +1,7 @@
 Reflect.isCallable / Reflect.isConstructable
 ============================================
 
-##Why are these useful?
+## Why are these useful?
 
 - Help support classes/other new function definitions in legacy framework code without significant changes
 - Expose a pretty important part of the runtime to applications, who also may wish to use them
@@ -9,7 +9,7 @@ Reflect.isCallable / Reflect.isConstructable
 
 ## The very tiny normative language:
 
-###Reflect.isCallable(argument)
+### Reflect.isCallable(argument)
 
 When the isCallable function is called with argument, the following steps are taken:
 
@@ -21,7 +21,7 @@ When the isCallable function is called with argument, the following steps are ta
 
 (Should be Return "[IsCallable](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-iscallable)(argument)", but adjusted to not report Class constructors as callable, as they throw unconditionally without invoking any author'd code, in the current draft)
 
-###Reflect.isConstructor(argument)
+### Reflect.isConstructor(argument)
 
 When the isConstructor function is called with argument, the following steps are taken:
 
