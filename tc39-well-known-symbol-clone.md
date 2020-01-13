@@ -41,80 +41,60 @@ would create copies of object values, while a deep clone would create new object
 
 When the `clone` function is called with arguments <var>O</var> and <var>deep</var>, the following steps are taken:
 
-1. If `Type(O)` is not `Object`, then return `O`.
-2. If `O` is `null`, then return `O`.
-3. Let `deep` be `ToBoolean(deep)`.
-4. `ReturnIfAbrupt(deep)`.
-5. Let `cloneFn` be `GetMethod(obj, @@clone)`.
-6. `ReturnIfAbrupt(cloneFn)`.
-7. If `cloneFn` is not `undefined`, then
-	1. Let `result` be `Call(cloneFn, obj, deep)`.
-	2. `ReturnIfAbrupt(result)`.
-	3. If `Type(result)` is not `Object`, then throw a `TypeError` exception.
-	4. Return `result`.
-8. else throw a `TypeError` exception.
-
-The `length` of `Reflect.clone` is 1.
+1. If [Type](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values)(<var>O</var>) is not Object, then return <var>O</var>.
+1. Let <var>deep</var> be ! [ToBoolean](https://tc39.es/ecma262/#sec-toboolean)(<var>deep</var>).
+1. Let <var>cloneFn</var> be ? [GetMethod](https://tc39.es/ecma262/#sec-getmethod)(<var>obj</var>, @@clone).
+1. If <var>cloneFn</var> is **undefined**, then set <var>cloneFn</var> to [%Object.prototype[@@clone]%](#objectprototype--clone---deep-).
+1. Else if [IsCallable](https://tc39.es/ecma262/#sec-iscallable)(<var>cloneFn</var>) is **false**, then throw a **TypeError** exception.
+1. Let <var>result</var> be ? [Call](https://tc39.es/ecma262/#sec-call)(<var>cloneFn</var>, <var>obj</var>, « <var>deep</var> »).
+1. If [Type](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values)(<var>result</var>) is not Object, then throw a **TypeError** exception.
+1. Return <var>result</var>.
 
 ## Set.prototype \[ @@clone ] ( <var>deep</var> )
 
-1. Let `result` be a new `Set`.
-2. Let `iterator` be `GetIterator(this)`.
-3. ReturnIfAbrupt(iterator).
-4. Let `deep` be `ToBoolean(deep)`.
-5. Repeat
-	1. Let `next` be `IteratorStep(iterator)`.
-	2. `ReturnIfAbrupt(next)`.
-	3. If next is `false`, then return `result`.
-	4. Let nextValue be `IteratorValue(next)`.
-	5. `ReturnIfAbrupt(nextValue)`.
-	6. Let `nextValue` be `Get(nextValue, 0)`.
-	7. If `Type(nextValue)` is `Object`, then
-		1. If `deep` is `true`, then let `nextValue` be `Reflect.clone(nextValue, true)`.
-	8. Let `result` be `result.add(nextValue)`.
-	9. `ReturnIfAbrupt(result)`.
+1. Let <var>O</var> be ? [ToObject](https://tc39.es/ecma262/#sec-toobject)(**this** value).
+1. Let <var>deep</var> be ! [ToBoolean](https://tc39.es/ecma262/#sec-toboolean)(<var>deep</var>).
+1. Let <var>ctor</var> be ? [SpeciesConstructor](https://tc39.es/ecma262/#sec-speciesconstructor)(<var>O</var>, [%Set%](https://tc39.es/ecma262/#sec-set-constructor))
+1. Let <var>result</var> be ? [Construct](https://tc39.es/ecma262/#sec-construct)(<var>ctor</var>).
+1. Let <var>iterator</var> be ? [GetIterator](https://tc39.es/ecma262/#sec-getiterator)(<var>O</var>).
+1. Repeat,
+	1. Let <var>next</var> be ? [IteratorStep](https://tc39.es/ecma262/#sec-iteratorstep)(<var>iterator</var>).
+	1. If <var>next</var> is **false**, then return <var>result</var>.
+	1. Let <var>nextValue</var> be ? [IteratorValue](https://tc39.es/ecma262/#sec-iteratorvalue)(<var>next</var>).
+	1. If [Type](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values)(<var>nextValue</var>) is Object, then
+		1. If <var>deep</var> is **true**, then set <var>nextValue</var> to ? [Call](https://tc39.es/ecma262/#sec-call)([%Reflect.clone%](#reflectclone-o-deep-), undefined, « <var>nextValue</var>, **true** »).
+	1. Let <var>result</var> be ? [Invoke](https://tc39.es/ecma262/#sec-invoke)(<var>result</var>, **"add"**, « <var>nextValue</var> »).
 
 ## Map.prototype \[ @@clone ] ( <var>deep</var> )
 
-1. Let `result` be a new `Map`.
-2. Let `iterator` be `GetIterator(this)`.
-3. ReturnIfAbrupt(iterator).
-4. Let `deep` be `ToBoolean(deep)`.
-5. Repeat
-	1. Let `next` be `IteratorStep(iterator)`.
-	2. `ReturnIfAbrupt(next)`.
-	3. If next is `false`, then return `result`.
-	4. Let `nextValue` be `IteratorValue(next)`.
-	5. `ReturnIfAbrupt(nextValue)`.
-	6. Let `nextKey` be `Get(nextValue, 0)`.
-	7. Let `nextValue` be `Get(nextValue, 1)`.
-	8. If `Type(nextValue)` is `Object`, then
-		1. If `deep` is `true`, then let `nextValue` be `Reflect.clone(nextValue, true)`.
-	9. Let `result` be `result.set(nextKey, nextValue)`.
-	10. `ReturnIfAbrupt(result)`.
+1. Let <var>O</var> be ? [ToObject](https://tc39.es/ecma262/#sec-toobject)(**this** value).
+1. Let <var>deep</var> be ! [ToBoolean](https://tc39.es/ecma262/#sec-toboolean)(<var>deep</var>).
+1. Let <var>ctor</var> be ? [SpeciesConstructor](https://tc39.es/ecma262/#sec-speciesconstructor)(<var>O</var>, [%Map%](https://tc39.es/ecma262/#sec-map-constructor))
+1. Let <var>result</var> be ? [Construct](https://tc39.es/ecma262/#sec-construct)(<var>ctor</var>).
+1. Let <var>iterator</var> be ? [GetIterator](https://tc39.es/ecma262/#sec-getiterator)(<var>O</var>).
+1. Repeat,
+	1. Let <var>next</var> be ? [IteratorStep](https://tc39.es/ecma262/#sec-iteratorstep)(<var>iterator</var>).
+	1. If <var>next</var> is **false**, then return <var>result</var>.
+	1. Let <var>nextValue</var> be ? [IteratorValue](https://tc39.es/ecma262/#sec-iteratorvalue)(<var>next</var>).
+	1. Let <var>nextKey</var> be Get(<var>nextValue</var>, 0).
+	1. Set <var>nextValue</var> to Get(<var>nextValue</var>, 1).
+	1. If [Type](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values)(<var>nextValue</var>) is Object, then
+		1. If <var>deep</var> is **true**, then set <var>nextValue</var> to ? [Call](https://tc39.es/ecma262/#sec-call)([%Reflect.clone%](#reflectclone-o-deep-), undefined, « <var>nextValue</var>, **true** »).
+	1. Let <var>result</var> be ? [Invoke](https://tc39.es/ecma262/#sec-invoke)(<var>result</var>, **"set"**, « <var>nextKey</var>, <var>nextValue</var> »).
 
 ## Object.prototype \[ @@clone ] ( <var>deep</var> )
 
-1. Let `O` be `ToObject(this)`.
-2. `ReturnIfAbrupt(O)`.
-3. Let `proto` be the result of calling the `[[GetPrototypeOf]]` internal method of `O`.
-4. `ReturnIfAbrupt(proto)`.
-5. Let `result` be `ObjectCreate(proto)`.
-6. Let `keys` be the result of calling the `[[OwnPropertyKeys]]` internal method of `O`.
-7. `ReturnIfAbrupt(keys)`.
-8. Let `iterator` be `GetIterator(keys)`.
-9. Repeat
-	1. Let `next` be `IteratorStep(iterator)`.
-	2. `ReturnIfAbrupt(next)`.
-	3. If next is `false`, then return `result`.
-	4. Let `nextValue` be `IteratorValue(next)`.
-	5. `ReturnIfAbrupt(nextValue)`.
-	6. Let `nextKey` be `Get(nextValue, 0)`.
-	7. Let `nextValue` be `Get(nextValue, 1)`.
-	8. If `Type(nextValue)` is `Object`, then
-		1. If `deep` is `true`, then let `nextValue` be `Reflect.clone(nextValue, true)`.
-	9. Let `putStatus` be `Put(result, nextKey, nextValue, true)`.
-	10. `ReturnIfAbrupt(putStatus)`.
+1. Let <var>O</var> be ? [RequireObjectCoercible](https://tc39.es/ecma262/#sec-requireobjectcoercible)(**this** value).
+1. If [Type](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values)(<var>O</var>) is not Object, then return <var>O</var>.
+1. Let <var>deep</var> be ! [ToBoolean](https://tc39.es/ecma262/#sec-toboolean)(<var>deep</var>).
+1. Let <var>proto</var> be ? <var>O</var>.\[\[GetPrototypeOf]]().
+1. Let <var>result</var> be [ObjectCreate](https://tc39.es/ecma262/#sec-objectcreate)(<var>proto</var>).
+1. Let <var>keys</var> be ? <var>O</var>.\[\[OwnPropertyKeys]]().
+1. For each element <var>key</var> of <var>keys</var>, do
+	1. Let <var>desc</var> be ? <var>O</var>.\[\[GetOwnProperty]](<var>key</var>).
+	1. If [Type](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values)(<var>desc</var>.\[\[Value]]) is Object, then
+		1. If <var>deep</var> is **true**, then set <var>desc</var>.\[\[Value]] to ? [Call](https://tc39.es/ecma262/#sec-call)([%Reflect.clone%](#reflectclone-o-deep-), undefined, « <var>nextValue</var>, **true** »).
+	1. ! [DefinePropertyOrThrow](https://tc39.es/ecma262/#sec-definepropertyorthrow)(<var>result</var>, <var>key</var>, <var>desc</var>).
 
 ## Similar Proposals:
 
