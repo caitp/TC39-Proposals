@@ -25,9 +25,11 @@ Unfortunately, this strategy is problematic in the following cases:
 
 	In some engines, accessing any properties of this object specified in IDL will result in an exception.
 
-2. **Cloning ES6 collections**
+2. **Cloning collections introduced in ES2015**
 
 	Data in collections is not stored as properties of the collection, and as such, copying properties does not accomplish the requested task. It takes a fair bit of special casing code in order to handle cloning these objects.
+
+	Weak collections can't be cloned as engines have rejected providing any API that would require iteration, such as the `clear()` method.
 
 ## @@clone conventions:
 
