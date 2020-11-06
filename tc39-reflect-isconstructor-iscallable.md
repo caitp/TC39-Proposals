@@ -1,4 +1,4 @@
-Reflect.isCallable() / Reflect.isConstructor()
+Function.isCallable() / Function.isConstructor()
 ==============================================
 
 ## Why are these useful?
@@ -9,7 +9,7 @@ Reflect.isCallable() / Reflect.isConstructor()
 
 ## The very tiny normative language:
 
-### Reflect.isCallable ( <var>argument</var> )
+### Function.isCallable ( <var>argument</var> )
 
 When the `isCallable` function is called with argument <var>argument</var>, the following steps are taken:
 
@@ -19,7 +19,7 @@ When the `isCallable` function is called with argument <var>argument</var>, the 
 
 (Should be "Return [IsCallable](https://tc39.es/ecma262/#sec-iscallable)(<var>argument</var>)", but adjusted to not report Class constructors as callable, as they throw unconditionally without invoking any author code)
 
-### Reflect.isConstructor ( <var>argument</var> )
+### Function.isConstructor ( <var>argument</var> )
 
 When the `isConstructor` function is called with argument <var>argument</var>, the following steps are taken:
 
